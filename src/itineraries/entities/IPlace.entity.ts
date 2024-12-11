@@ -2,219 +2,218 @@ import { ObjectType, Field, Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class ITimestamp {
-  @Field(() => Float)
-  seconds: number;
+  @Field(() => Float, { nullable: true })
+  seconds?: number | null;
 
-  @Field(() => Float)
-  nanos: number;
+  @Field(() => Float, { nullable: true })
+  nanos?: number | null;
 }
 
 @ObjectType()
 export class IAuthorAttribution {
-  @Field()
-  displayName: string;
+  @Field({ nullable: true })
+  displayName?: string | null;
 
-  @Field()
-  uri: string;
+  @Field({ nullable: true })
+  uri?: string | null;
 
-  @Field()
-  photoUri: string;
+  @Field({ nullable: true })
+  photoUri?: string | null;
 }
 
 @ObjectType()
 export class ILocalizedText {
-  @Field()
-  text: string;
+  @Field({ nullable: true })
+  text?: string | null;
 
-  @Field()
-  LanguageCode: string;
+  @Field({ nullable: true })
+  LanguageCode?: string | null;
 }
 
 @ObjectType()
 export class IMoney {
-  @Field()
-  currencyCode: string;
+  @Field({ nullable: true })
+  currencyCode?: string | null;
 
-  @Field(() => Float)
-  nanos: number;
+  @Field(() => Float, { nullable: true })
+  nanos?: number | null;
 }
 
 @ObjectType()
 export class IAttribution {
-  @Field()
-  provider: string;
+  @Field({ nullable: true })
+  provider?: string | null;
 
-  @Field()
-  providerUri: string;
+  @Field({ nullable: true })
+  providerUri?: string | null;
 }
 
 @ObjectType()
 export class IAddressComponent {
-  @Field()
-  longText: string;
+  @Field({ nullable: true })
+  longText?: string | null;
 
-  @Field()
-  shortText: string;
+  @Field({ nullable: true })
+  shortText?: string | null;
 
-  @Field(() => [String])
-  types: string[];
+  @Field(() => [String], { nullable: true })
+  types?: string[] | null;
 
-  @Field()
-  languageCode: string;
+  @Field({ nullable: true })
+  languageCode?: string | null;
 }
 
 @ObjectType()
 export class ILatLng {
-  @Field(() => Float)
-  latitude: number;
+  @Field(() => Float, { nullable: true })
+  latitude?: number | null;
 
-  @Field(() => Float)
-  longitude: number;
+  @Field(() => Float, { nullable: true })
+  longitude?: number | null;
 }
 
 @ObjectType()
 export class IPlusCode {
-  @Field()
-  globalCode: string;
+  @Field({ nullable: true })
+  globalCode?: string | null;
 
-  @Field()
-  compoundCode: string;
+  @Field({ nullable: true })
+  compoundCode?: string | null;
 }
 
 @ObjectType()
 export class IReview {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string | null;
 
-  @Field()
-  relativePublishTimeDescription: string;
+  @Field({ nullable: true })
+  relativePublishTimeDescription?: string | null;
 
-  @Field(() => ILocalizedText)
-  text: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  text?: ILocalizedText | null;
 
-  @Field(() => ILocalizedText)
-  originalText: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  originalText?: ILocalizedText | null;
 
-  @Field(() => Float)
-  rating: number;
+  @Field(() => Float, { nullable: true })
+  rating?: number | null;
 
-  @Field(() => IAuthorAttribution)
-  authorAttribution: IAuthorAttribution;
+  @Field(() => IAuthorAttribution, { nullable: true })
+  authorAttribution?: IAuthorAttribution | null;
 }
 
 @ObjectType()
 export class IReferences {
-  @Field(() => [String])
-  places: string[];
+  @Field(() => [String], { nullable: true })
+  places?: string[] | null;
 
-  @Field(() => [IReview])
-  reviews: IReview[];
+  @Field(() => [IReview], { nullable: true })
+  reviews?: IReview[] | null;
 }
 
 @ObjectType()
 export class IPhoto {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string | null;
 
-  @Field(() => Float)
-  height: number;
+  @Field(() => Float, { nullable: true })
+  height?: number | null;
 
-  @Field(() => Float)
-  width: number;
+  @Field(() => Float, { nullable: true })
+  width?: number | null;
 
-  @Field(() => [IAuthorAttribution])
-  authorAttributions: IAuthorAttribution[];
+  @Field(() => [IAuthorAttribution], { nullable: true })
+  authorAttributions?: IAuthorAttribution[] | null;
 }
 
 @ObjectType()
 export class IPriceRange {
-  @Field(() => IMoney)
-  startPrice: IMoney;
+  @Field(() => IMoney, { nullable: true })
+  startPrice?: IMoney | null;
 
-  @Field(() => IMoney)
-  endPrice: IMoney;
+  @Field(() => IMoney, { nullable: true })
+  endPrice?: IMoney | null;
 }
 
 @ObjectType()
 export class IViewport {
-  @Field(() => ILatLng)
-  low: ILatLng;
+  @Field(() => ILatLng, { nullable: true })
+  low?: ILatLng | null;
 
-  @Field(() => ILatLng)
-  high: ILatLng;
+  @Field(() => ILatLng, { nullable: true })
+  high?: ILatLng | null;
 }
-
 @ObjectType()
 export class IGenerativeSummary {
-  @Field(() => ILocalizedText)
-  overview: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  overview?: ILocalizedText | null;
 
-  @Field(() => ILocalizedText)
-  description: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  description?: ILocalizedText | null;
 
-  @Field(() => IReferences)
-  references: IReferences;
+  @Field(() => IReferences, { nullable: true })
+  references?: IReferences | null;
 }
 
 @ObjectType()
 export class IPlace {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string | null;
 
-  @Field()
-  id: string;
+  @Field({ nullable: true })
+  id?: string | null;
 
-  @Field(() => ILocalizedText)
-  displayName: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  displayName?: ILocalizedText | null;
 
-  @Field(() => [String])
-  types: string[];
+  @Field(() => [String], { nullable: true })
+  types?: string[] | null;
 
-  @Field()
-  primaryType: string;
+  @Field({ nullable: true })
+  primaryType?: string | null;
 
-  @Field(() => ILocalizedText)
-  primaryTypeDisplayName: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  primaryTypeDisplayName?: ILocalizedText | null;
 
-  @Field()
-  nationalPhoneNumber: string;
+  @Field({ nullable: true })
+  nationalPhoneNumber?: string | null;
 
-  @Field()
-  internationalPhoneNumber: string;
+  @Field({ nullable: true })
+  internationalPhoneNumber?: string | null;
 
-  @Field()
-  formattedAddress: string;
+  @Field({ nullable: true })
+  formattedAddress?: string | null;
 
-  @Field()
-  shortFormattedAddress: string;
+  @Field({ nullable: true })
+  shortFormattedAddress?: string | null;
 
-  @Field(() => Float)
-  rating: number;
+  @Field(() => Float, { nullable: true })
+  rating?: number | null;
 
-  @Field(() => IViewport)
-  viewport: IViewport;
+  @Field(() => IViewport, { nullable: true })
+  viewport?: IViewport | null;
 
-  @Field(() => ILatLng)
-  location: ILatLng;
+  @Field(() => ILatLng, { nullable: true })
+  location?: ILatLng | null;
 
-  @Field(() => IGenerativeSummary)
-  generativeSummary: IGenerativeSummary;
+  @Field(() => IGenerativeSummary, { nullable: true })
+  generativeSummary?: IGenerativeSummary | null;
 
-  @Field(() => IPlusCode)
-  plusCode: IPlusCode;
+  @Field(() => IPlusCode, { nullable: true })
+  plusCode?: IPlusCode | null;
 
-  @Field(() => [IAddressComponent])
-  addressComponents: IAddressComponent[];
+  @Field(() => [IAddressComponent], { nullable: true })
+  addressComponents?: IAddressComponent[] | null;
 
-  @Field(() => [IPhoto])
-  photos: IPhoto[];
+  @Field(() => [IPhoto], { nullable: true })
+  photos?: IPhoto[] | null;
 
-  @Field(() => [IAttribution])
-  attributions: IAttribution[];
+  @Field(() => [IAttribution], { nullable: true })
+  attributions?: IAttribution[] | null;
 
-  @Field(() => Float)
-  userRatingCount: number;
+  @Field(() => Float, { nullable: true })
+  userRatingCount?: number | null;
 
-  @Field(() => ILocalizedText)
-  editorialSummary: ILocalizedText;
+  @Field(() => ILocalizedText, { nullable: true })
+  editorialSummary?: ILocalizedText | null;
 }

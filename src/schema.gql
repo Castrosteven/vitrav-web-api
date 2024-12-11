@@ -49,96 +49,96 @@ type GeneratedItinerary {
 }
 
 type IAddressComponent {
-  languageCode: String!
-  longText: String!
-  shortText: String!
-  types: [String!]!
+  languageCode: String
+  longText: String
+  shortText: String
+  types: [String!]
 }
 
 type IAttribution {
-  provider: String!
-  providerUri: String!
+  provider: String
+  providerUri: String
 }
 
 type IAuthorAttribution {
-  displayName: String!
-  photoUri: String!
-  uri: String!
+  displayName: String
+  photoUri: String
+  uri: String
 }
 
 type IGenerativeSummary {
-  description: ILocalizedText!
-  overview: ILocalizedText!
-  references: IReferences!
+  description: ILocalizedText
+  overview: ILocalizedText
+  references: IReferences
 }
 
 type ILatLng {
-  latitude: Float!
-  longitude: Float!
+  latitude: Float
+  longitude: Float
 }
 
 type ILocalizedText {
-  LanguageCode: String!
-  text: String!
+  LanguageCode: String
+  text: String
 }
 
 type IMoney {
-  currencyCode: String!
-  nanos: Float!
+  currencyCode: String
+  nanos: Float
 }
 
 type IPhoto {
-  authorAttributions: [IAuthorAttribution!]!
-  height: Float!
-  name: String!
-  width: Float!
+  authorAttributions: [IAuthorAttribution!]
+  height: Float
+  name: String
+  width: Float
 }
 
 type IPlace {
-  addressComponents: [IAddressComponent!]!
-  attributions: [IAttribution!]!
-  displayName: ILocalizedText!
-  editorialSummary: ILocalizedText!
-  formattedAddress: String!
-  generativeSummary: IGenerativeSummary!
-  id: String!
-  internationalPhoneNumber: String!
-  location: ILatLng!
-  name: String!
-  nationalPhoneNumber: String!
-  photos: [IPhoto!]!
-  plusCode: IPlusCode!
-  primaryType: String!
-  primaryTypeDisplayName: ILocalizedText!
-  rating: Float!
-  shortFormattedAddress: String!
-  types: [String!]!
-  userRatingCount: Float!
-  viewport: IViewport!
+  addressComponents: [IAddressComponent!]
+  attributions: [IAttribution!]
+  displayName: ILocalizedText
+  editorialSummary: ILocalizedText
+  formattedAddress: String
+  generativeSummary: IGenerativeSummary
+  id: String
+  internationalPhoneNumber: String
+  location: ILatLng
+  name: String
+  nationalPhoneNumber: String
+  photos: [IPhoto!]
+  plusCode: IPlusCode
+  primaryType: String
+  primaryTypeDisplayName: ILocalizedText
+  rating: Float
+  shortFormattedAddress: String
+  types: [String!]
+  userRatingCount: Float
+  viewport: IViewport
 }
 
 type IPlusCode {
-  compoundCode: String!
-  globalCode: String!
+  compoundCode: String
+  globalCode: String
 }
 
 type IReferences {
-  places: [String!]!
-  reviews: [IReview!]!
+  places: [String!]
+  reviews: [IReview!]
 }
 
 type IReview {
-  authorAttribution: IAuthorAttribution!
-  name: String!
-  originalText: ILocalizedText!
-  rating: Float!
-  relativePublishTimeDescription: String!
-  text: ILocalizedText!
+  authorAttribution: IAuthorAttribution
+  name: String
+  originalText: ILocalizedText
+  rating: Float
+  relativePublishTimeDescription: String
+  text: ILocalizedText
 }
 
 type IViewport {
-  high: ILatLng!
-  low: ILatLng!
+  high: ILatLng
+  low: ILatLng
 }
 
 type Itinerary {
