@@ -1,0 +1,217 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateItineraryInput {
+  """
+  List of place ids for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-id
+  """
+  google_places_place_ids: [String!]!
+
+  """List of google map place types"""
+  google_places_primary_place_types: [String!]
+
+  """Category of the itinerary"""
+  itinerary_category: ItineraryCategory!
+
+  """Title of the itinerary"""
+  itinerary_title: String!
+
+  """type of itinerary"""
+  itinerary_type: ItineraryType!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type GeneratedItinerary {
+  """
+  List of primary place types for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-types
+  """
+  activities: [IPlace!]!
+
+  """ID of the itinerary"""
+  id: String!
+
+  """Category of the itinerary"""
+  itinerary_category: ItineraryCategory!
+
+  """Description of the itinerary"""
+  itinerary_description: String!
+
+  """Title of the itinerary"""
+  itinerary_title: String!
+
+  """type of itinerary"""
+  itinerary_type: ItineraryType!
+}
+
+type IAddressComponent {
+  languageCode: String!
+  longText: String!
+  shortText: String!
+  types: [String!]!
+}
+
+type IAttribution {
+  provider: String!
+  providerUri: String!
+}
+
+type IAuthorAttribution {
+  displayName: String!
+  photoUri: String!
+  uri: String!
+}
+
+type IGenerativeSummary {
+  description: ILocalizedText!
+  overview: ILocalizedText!
+  references: IReferences!
+}
+
+type ILatLng {
+  latitude: Float!
+  longitude: Float!
+}
+
+type ILocalizedText {
+  LanguageCode: String!
+  text: String!
+}
+
+type IMoney {
+  currencyCode: String!
+  nanos: Float!
+}
+
+type IPhoto {
+  authorAttributions: [IAuthorAttribution!]!
+  height: Float!
+  name: String!
+  width: Float!
+}
+
+type IPlace {
+  addressComponents: [IAddressComponent!]!
+  attributions: [IAttribution!]!
+  displayName: ILocalizedText!
+  editorialSummary: ILocalizedText!
+  formattedAddress: String!
+  generativeSummary: IGenerativeSummary!
+  id: String!
+  internationalPhoneNumber: String!
+  location: ILatLng!
+  name: String!
+  nationalPhoneNumber: String!
+  photos: [IPhoto!]!
+  plusCode: IPlusCode!
+  primaryType: String!
+  primaryTypeDisplayName: ILocalizedText!
+  rating: Float!
+  shortFormattedAddress: String!
+  types: [String!]!
+  userRatingCount: Float!
+  viewport: IViewport!
+}
+
+type IPlusCode {
+  compoundCode: String!
+  globalCode: String!
+}
+
+type IReferences {
+  places: [String!]!
+  reviews: [IReview!]!
+}
+
+type IReview {
+  authorAttribution: IAuthorAttribution!
+  name: String!
+  originalText: ILocalizedText!
+  rating: Float!
+  relativePublishTimeDescription: String!
+  text: ILocalizedText!
+}
+
+type IViewport {
+  high: ILatLng!
+  low: ILatLng!
+}
+
+type Itinerary {
+  """
+  List of place ids for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-id
+  """
+  google_places_place_ids: [String!]!
+
+  """
+  List of primary place types for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-types
+  """
+  google_places_primary_place_types: [String!]
+
+  """ID of the itinerary"""
+  id: String!
+
+  """Category of the itinerary"""
+  itinerary_category: ItineraryCategory!
+
+  """Description of the itinerary"""
+  itinerary_description: String!
+
+  """An AI Generated image URL for the itinerary"""
+  itinerary_thumbnail: String!
+
+  """Title of the itinerary"""
+  itinerary_title: String!
+
+  """type of itinerary"""
+  itinerary_type: ItineraryType!
+}
+
+enum ItineraryCategory {
+  BLUE
+  GREEN
+  RED
+}
+
+enum ItineraryType {
+  CUSTOM
+  DYNAMIC
+}
+
+type Mutation {
+  createItinerary(createItineraryInput: CreateItineraryInput!): Itinerary!
+  createUser(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+type Query {
+  genereateItinerary(
+    id: String!
+
+    """Latitude only required if itinerary_type is dynamic"""
+    lat: Float
+
+    """Longititude only required if itinerary_type is dynamic"""
+    long: Float
+  ): GeneratedItinerary!
+  itineraries: [Itinerary!]!
+  itinerary(id: String!): Itinerary!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+type User {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
