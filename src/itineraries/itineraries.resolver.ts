@@ -3,15 +3,16 @@ import { ItinerariesService } from './itineraries.service';
 import { Itinerary } from './entities/itinerary.entity';
 import { CreateItineraryInput } from './dto/create-itinerary.input';
 import { GeneratedItinerary } from './entities/generatedItinerary.entity';
-// import { UpdateItineraryInput } from './dto/update-itinerary.input';
+import { CurrentUser } from 'src/user.decorator';
 @Resolver(() => Itinerary)
 export class ItinerariesResolver {
   constructor(private readonly itinerariesService: ItinerariesService) {}
-
   @Mutation(() => Itinerary)
   createItinerary(
+    @CurrentUser() user,
     @Args('createItineraryInput') createItineraryInput: CreateItineraryInput,
   ) {
+    console.log(`User: ${user.id} is creating itinerary`);
     return this.itinerariesService.create(createItineraryInput);
   }
 
@@ -43,19 +44,4 @@ export class ItinerariesResolver {
   ) {
     return this.itinerariesService.generate(id, lat, long);
   }
-
-  // @Mutation(() => Itinerary)
-  // updateItinerary(
-  //   @Args('updateItineraryInput') updateItineraryInput: UpdateItineraryInput,
-  // ) {
-  //   return this.itinerariesService.update(
-  //     updateItineraryInput.id,
-  //     updateItineraryInput,
-  //   );
-  // }
-
-  // @Mutation(() => Itinerary)
-  // removeItinerary(@Args('id', { type: () => String }) id: string) {
-  //   return this.itinerariesService.remove(id);
-  // }
 }

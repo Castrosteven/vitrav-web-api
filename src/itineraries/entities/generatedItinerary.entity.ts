@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { ItineraryCategory, ItineraryType } from '../enums';
+// import { ItineraryCategory, ItineraryType } from '../enums';
 import { IPlace } from './IPlace.entity';
+import { $Enums } from '@prisma/client';
 
 /**
  * Represents an itinerary entity.
@@ -28,17 +29,17 @@ export class GeneratedItinerary {
    * @type {ItineraryCategory}
    * @description
    */
-  @Field(() => ItineraryCategory, {
+  @Field(() => $Enums.ItineraryCategory, {
     description: 'Category of the itinerary',
     nullable: false,
   })
-  itinerary_category: ItineraryCategory;
+  itinerary_category: $Enums.ItineraryCategory;
 
-  @Field(() => ItineraryType, {
+  @Field(() => $Enums.ItineraryType, {
     description: 'type of itinerary',
     nullable: false,
   })
-  itinerary_type: ItineraryType;
+  itinerary_type: $Enums.ItineraryType;
 
   /**
    * A list of Google Maps Places

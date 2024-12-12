@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { ItineraryCategory, ItineraryType } from '../enums';
+import { ItineraryCategory, ItineraryType } from '@prisma/client';
 
 @InputType()
 export class CreateItineraryInput {

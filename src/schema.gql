@@ -12,18 +12,13 @@ input CreateItineraryInput {
   google_places_primary_place_types: [String!]
 
   """Category of the itinerary"""
-  itinerary_category: ItineraryCategory!
+  itinerary_category: ItineraryType!
 
   """Title of the itinerary"""
   itinerary_title: String!
 
   """type of itinerary"""
-  itinerary_type: ItineraryType!
-}
-
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  itinerary_type: ItineraryCategory!
 }
 
 type GeneratedItinerary {
@@ -36,7 +31,7 @@ type GeneratedItinerary {
   id: String!
 
   """Category of the itinerary"""
-  itinerary_category: ItineraryCategory!
+  itinerary_category: ItineraryType!
 
   """Description of the itinerary"""
   itinerary_description: String!
@@ -45,7 +40,7 @@ type GeneratedItinerary {
   itinerary_title: String!
 
   """type of itinerary"""
-  itinerary_type: ItineraryType!
+  itinerary_type: ItineraryCategory!
 }
 
 type IAddressComponent {
@@ -156,7 +151,7 @@ type Itinerary {
   id: String!
 
   """Category of the itinerary"""
-  itinerary_category: ItineraryCategory!
+  itinerary_category: ItineraryType!
 
   """Description of the itinerary"""
   itinerary_description: String!
@@ -168,25 +163,22 @@ type Itinerary {
   itinerary_title: String!
 
   """type of itinerary"""
-  itinerary_type: ItineraryType!
+  itinerary_type: ItineraryCategory!
 }
 
 enum ItineraryCategory {
+  CUSTOM
+  DYNAMIC
+}
+
+enum ItineraryType {
   BLUE
   GREEN
   RED
 }
 
-enum ItineraryType {
-  CUSTOM
-  DYNAMIC
-}
-
 type Mutation {
   createItinerary(createItineraryInput: CreateItineraryInput!): Itinerary!
-  createUser(createUserInput: CreateUserInput!): User!
-  removeUser(id: Int!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
@@ -201,17 +193,4 @@ type Query {
   ): GeneratedItinerary!
   itineraries: [Itinerary!]!
   itinerary(id: String!): Itinerary!
-  user(id: Int!): User!
-  users: [User!]!
-}
-
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }

@@ -35,3 +35,12 @@ model Itinerary {
   google_places_primary_place_types String[]
   google_places_place_ids           String[]
 }
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  googleId  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
