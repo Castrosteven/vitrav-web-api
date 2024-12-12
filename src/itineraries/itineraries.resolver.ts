@@ -4,10 +4,13 @@ import { Itinerary } from './entities/itinerary.entity';
 import { CreateItineraryInput } from './dto/create-itinerary.input';
 import { GeneratedItinerary } from './entities/generatedItinerary.entity';
 import { CurrentUser } from 'src/user.decorator';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 @Resolver(() => Itinerary)
 export class ItinerariesResolver {
   constructor(private readonly itinerariesService: ItinerariesService) {}
   @Mutation(() => Itinerary)
+  @UseGuards(JwtAuthGuard) // Protect this route with JWT authentication
   createItinerary(
     @CurrentUser() user,
     @Args('createItineraryInput') createItineraryInput: CreateItineraryInput,
