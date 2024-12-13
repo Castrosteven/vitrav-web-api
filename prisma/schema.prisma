@@ -24,6 +24,20 @@ enum ItineraryCategory {
   BLUE
 }
 
+enum Role {
+  GUEST // Default guest role, no permissions to create itineraries
+  ADMIN // Role that allows users to create itineraries and requires a profile
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  bio       String? // Optional bio
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Itinerary {
   id                                String            @id @default(cuid())
   itinerary_description             String            @default("")
@@ -37,6 +51,12 @@ model Itinerary {
   google_places_place_ids           String[]
   userId                            String
   user                              User              @relation(fields: [userId], references: [id])
+
+  // New lat and long fields for geolocation
+  latitude  Float?
+  longitude Float?
+
+  @@index([itinerary_category])
 }
 
 model User {
@@ -47,4 +67,9 @@ model User {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   Itinerary Itinerary[]
+  Profile   Profile?
+  role      Role        @default(GUEST) // Default role is GUEST
+
+  @@index([googleId])
+  @@index([email])
 }

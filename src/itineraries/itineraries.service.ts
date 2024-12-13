@@ -53,11 +53,78 @@ export class ItinerariesService {
     }
   }
 
-  // update(id: number, updateItineraryInput: UpdateItineraryInput) {
-  //   return `This action updates a #${id} itinerary`;
-  // }
+  async getItinerariesNear(
+    lat: number,
+    long: number,
+    page: number = 1,
+    pageSize: number = 10,
+    radiusInKm: number = 1000, // Default radius of 1000 km
+  ) {
+    try {
+      // Constants for Earth radius
+      const EARTH_RADIUS = 6371; // In kilometers
 
-  // remove(id: string) {
-  //   return `This action removes a #${id} itinerary`;
-  // }
+      // Haversine formula to calculate the distance between two lat/long points
+      function haversine(
+        lat1: number,
+        lon1: number,
+        lat2: number,
+        lon2: number,
+      ): number {
+        const toRadians = (degree: number) => degree * (Math.PI / 180);
+        const dLat = toRadians(lat2 - lat1);
+        const dLon = toRadians(lon2 - lon1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) *
+            Math.cos(toRadians(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c; // Return the distance in kilometers
+      }
+
+      // Query all itineraries with latitude and longitude fields
+      const itineraries = await this.prisma.itinerary.findMany({
+        where: {
+          latitude: { not: null },
+          longitude: { not: null },
+        },
+      });
+
+      // Calculate distances for each itinerary
+      const itinerariesWithDistance = itineraries.map((itinerary) => {
+        const distance = haversine(
+          lat,
+          long,
+          itinerary.latitude!,
+          itinerary.longitude!,
+        );
+        return { ...itinerary, distance };
+      });
+
+      // Filter itineraries within the given radius
+      const filteredItineraries = itinerariesWithDistance.filter(
+        (itinerary) => itinerary.distance <= radiusInKm,
+      );
+
+      // Sort itineraries by distance in ascending order
+      filteredItineraries.sort((a, b) => a.distance - b.distance);
+
+      // Pagination logic
+      const offset = (page - 1) * pageSize;
+      const paginatedItineraries = filteredItineraries.slice(
+        offset,
+        offset + pageSize,
+      );
+
+      // Return the paginated itineraries
+      return paginatedItineraries;
+    } catch (error) {
+      console.error('Error fetching itineraries:', error);
+      throw new Error('Failed to fetch itineraries near the given location.');
+    }
+  }
 }

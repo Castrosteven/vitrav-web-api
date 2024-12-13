@@ -46,8 +46,40 @@ export class ItinerariesController {
    * @returns A list of all itineraries.
    */
   @Get('')
-  findAll() {
-    return this.itinerariesService.findAll();
+  async getItinerariesNear(
+    @Query('lat') lat: string,
+    @Query('long') long: string,
+    @Query('page') page: string = '1',
+    @Query('pageSize') pageSize: string = '10',
+  ) {
+    // Parse lat, long, page, pageSize from query params
+    const latitude = parseFloat(lat);
+    const longitude = parseFloat(long);
+    const pageNum = parseInt(page, 10);
+    const pageSizeNum = parseInt(pageSize, 10);
+
+    // Ensure lat and long are valid numbers
+    if (isNaN(latitude) || isNaN(longitude)) {
+      return {
+        statusCode: 400,
+        message: 'Invalid latitude or longitude.',
+      };
+    }
+
+    // Call service to get the itineraries
+    const itineraries = await this.itinerariesService.getItinerariesNear(
+      latitude,
+      longitude,
+      pageNum,
+      pageSizeNum,
+    );
+
+    // Return response
+    return {
+      page: pageNum,
+      pageSize: pageSizeNum,
+      itineraries,
+    };
   }
 
   /**

@@ -22,7 +22,8 @@ export class ItineraryEntity implements Itinerary {
   itinerary_description: string;
 
   itinerary_thumbnail: string;
-
+  latitude: number;
+  longitude: number;
   /**
    * A list of Google Maps Place Types associated with the itinerary.
    *
