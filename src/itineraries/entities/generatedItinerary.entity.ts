@@ -1,26 +1,24 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-// import { ItineraryCategory, ItineraryType } from '../enums';
 import { IPlace } from './IPlace.entity';
 import { $Enums } from '@prisma/client';
 
 /**
  * Represents an itinerary entity.
  */
-@ObjectType()
+// @ObjectType()
 export class GeneratedItinerary {
-  @Field(() => String, {
-    description: 'ID of the itinerary',
-    nullable: false,
-  })
+  // @Field(() => String, {
+  //   description: 'ID of the itinerary',
+  //   nullable: false,
+  // })
   id: string;
 
-  @Field(() => String, {
-    description: 'Title of the itinerary',
-    nullable: false,
-  })
+  // @Field(() => String, {
+  //   description: 'Title of the itinerary',
+  //   nullable: false,
+  // })
   itinerary_title: string;
 
-  @Field(() => String, { description: 'Description of the itinerary' })
+  // @Field(() => String, { description: 'Description of the itinerary' })
   itinerary_description: string;
 
   /**
@@ -29,16 +27,16 @@ export class GeneratedItinerary {
    * @type {ItineraryCategory}
    * @description
    */
-  @Field(() => $Enums.ItineraryCategory, {
-    description: 'Category of the itinerary',
-    nullable: false,
-  })
+  // @Field(() => $Enums.ItineraryCategory, {
+  //   description: 'Category of the itinerary',
+  //   nullable: false,
+  // })
   itinerary_category: $Enums.ItineraryCategory;
 
-  @Field(() => $Enums.ItineraryType, {
-    description: 'type of itinerary',
-    nullable: false,
-  })
+  // @Field(() => $Enums.ItineraryType, {
+  //   description: 'type of itinerary',
+  //   nullable: false,
+  // })
   itinerary_type: $Enums.ItineraryType;
 
   /**
@@ -47,10 +45,10 @@ export class GeneratedItinerary {
    * @type {IPlace[]}
    * @description List of places from places v1
    */
-  @Field(() => [IPlace], {
-    description:
-      'List of primary place types for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-types',
-    nullable: false,
-  })
+  // @Field(() => [IPlace], {
+  //   description:
+  //     'List of primary place types for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-types',
+  //   nullable: false,
+  // })
   activities: [IPlace];
 }

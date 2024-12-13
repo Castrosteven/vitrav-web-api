@@ -1,9 +1,7 @@
 import { Itinerary } from '@prisma/client';
 import { fetchNearByPlaces, fetchPlaceById } from './map_utils';
 
-export const customItineraryGenerator = async (
-  itinerary: Itinerary,
-): Promise<unknown> => {
+export const customItineraryGenerator = async (itinerary: Itinerary) => {
   const {
     itinerary_type,
     google_places_place_ids,

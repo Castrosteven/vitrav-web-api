@@ -1,219 +1,155 @@
-import { ObjectType, Field, Float } from '@nestjs/graphql';
+import { protos } from '@googlemaps/places';
 
-@ObjectType()
-export class ITimestamp {
-  @Field(() => Float, { nullable: true })
+export class ITimestamp implements protos.google.protobuf.ITimestamp {
   seconds?: number | null;
 
-  @Field(() => Float, { nullable: true })
   nanos?: number | null;
 }
 
-@ObjectType()
-export class IAuthorAttribution {
-  @Field({ nullable: true })
+export class IAuthorAttribution
+  implements protos.google.maps.places.v1.IAuthorAttribution
+{
   displayName?: string | null;
 
-  @Field({ nullable: true })
   uri?: string | null;
 
-  @Field({ nullable: true })
   photoUri?: string | null;
 }
 
-@ObjectType()
-export class ILocalizedText {
-  @Field({ nullable: true })
+export class ILocalizedText implements protos.google.type.ILocalizedText {
   text?: string | null;
 
-  @Field({ nullable: true })
   LanguageCode?: string | null;
 }
 
-@ObjectType()
-export class IMoney {
-  @Field({ nullable: true })
+export class IMoney implements protos.google.type.IMoney {
   currencyCode?: string | null;
 
-  @Field(() => Float, { nullable: true })
   nanos?: number | null;
 }
 
-@ObjectType()
-export class IAttribution {
-  @Field({ nullable: true })
+export class IAttribution
+  implements protos.google.maps.places.v1.Place.IAttribution
+{
   provider?: string | null;
 
-  @Field({ nullable: true })
   providerUri?: string | null;
 }
 
-@ObjectType()
-export class IAddressComponent {
-  @Field({ nullable: true })
+export class IAddressComponent
+  implements protos.google.maps.places.v1.Place.IAddressComponent
+{
   longText?: string | null;
 
-  @Field({ nullable: true })
   shortText?: string | null;
 
-  @Field(() => [String], { nullable: true })
   types?: string[] | null;
 
-  @Field({ nullable: true })
   languageCode?: string | null;
 }
 
-@ObjectType()
-export class ILatLng {
-  @Field(() => Float, { nullable: true })
+export class ILatLng implements protos.google.type.ILatLng {
   latitude?: number | null;
 
-  @Field(() => Float, { nullable: true })
   longitude?: number | null;
 }
 
-@ObjectType()
-export class IPlusCode {
-  @Field({ nullable: true })
+export class IPlusCode implements protos.google.maps.places.v1.Place.IPlusCode {
   globalCode?: string | null;
 
-  @Field({ nullable: true })
   compoundCode?: string | null;
 }
 
-@ObjectType()
-export class IReview {
-  @Field({ nullable: true })
+export class IReview implements protos.google.maps.places.v1.IReview {
   name?: string | null;
 
-  @Field({ nullable: true })
   relativePublishTimeDescription?: string | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   text?: ILocalizedText | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   originalText?: ILocalizedText | null;
 
-  @Field(() => Float, { nullable: true })
   rating?: number | null;
 
-  @Field(() => IAuthorAttribution, { nullable: true })
   authorAttribution?: IAuthorAttribution | null;
 }
 
-@ObjectType()
-export class IReferences {
-  @Field(() => [String], { nullable: true })
+export class IReferences implements protos.google.maps.places.v1.IReferences {
   places?: string[] | null;
 
-  @Field(() => [IReview], { nullable: true })
   reviews?: IReview[] | null;
 }
 
-@ObjectType()
-export class IPhoto {
-  @Field({ nullable: true })
+export class IPhoto implements protos.google.maps.places.v1.IPhoto {
   name?: string | null;
 
-  @Field(() => Float, { nullable: true })
   height?: number | null;
 
-  @Field(() => Float, { nullable: true })
   width?: number | null;
 
-  @Field(() => [IAuthorAttribution], { nullable: true })
   authorAttributions?: IAuthorAttribution[] | null;
 }
 
-@ObjectType()
-export class IPriceRange {
-  @Field(() => IMoney, { nullable: true })
+export class IPriceRange implements protos.google.maps.places.v1.IPriceRange {
   startPrice?: IMoney | null;
 
-  @Field(() => IMoney, { nullable: true })
   endPrice?: IMoney | null;
 }
 
-@ObjectType()
-export class IViewport {
-  @Field(() => ILatLng, { nullable: true })
+export class IViewport implements protos.google.geo.type.IViewport {
   low?: ILatLng | null;
 
-  @Field(() => ILatLng, { nullable: true })
   high?: ILatLng | null;
 }
-@ObjectType()
-export class IGenerativeSummary {
-  @Field(() => ILocalizedText, { nullable: true })
+
+export class IGenerativeSummary
+  implements protos.google.maps.places.v1.Place.IGenerativeSummary
+{
   overview?: ILocalizedText | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   description?: ILocalizedText | null;
 
-  @Field(() => IReferences, { nullable: true })
   references?: IReferences | null;
 }
 
-@ObjectType()
-export class IPlace {
-  @Field({ nullable: true })
+export class IPlace implements protos.google.maps.places.v1.IPlace {
   name?: string | null;
 
-  @Field({ nullable: true })
   id?: string | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   displayName?: ILocalizedText | null;
 
-  @Field(() => [String], { nullable: true })
   types?: string[] | null;
 
-  @Field({ nullable: true })
   primaryType?: string | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   primaryTypeDisplayName?: ILocalizedText | null;
 
-  @Field({ nullable: true })
   nationalPhoneNumber?: string | null;
 
-  @Field({ nullable: true })
   internationalPhoneNumber?: string | null;
 
-  @Field({ nullable: true })
   formattedAddress?: string | null;
 
-  @Field({ nullable: true })
   shortFormattedAddress?: string | null;
 
-  @Field(() => Float, { nullable: true })
   rating?: number | null;
 
-  @Field(() => IViewport, { nullable: true })
   viewport?: IViewport | null;
 
-  @Field(() => ILatLng, { nullable: true })
   location?: ILatLng | null;
 
-  @Field(() => IGenerativeSummary, { nullable: true })
   generativeSummary?: IGenerativeSummary | null;
 
-  @Field(() => IPlusCode, { nullable: true })
   plusCode?: IPlusCode | null;
 
-  @Field(() => [IAddressComponent], { nullable: true })
   addressComponents?: IAddressComponent[] | null;
 
-  @Field(() => [IPhoto], { nullable: true })
   photos?: IPhoto[] | null;
 
-  @Field(() => [IAttribution], { nullable: true })
   attributions?: IAttribution[] | null;
 
-  @Field(() => Float, { nullable: true })
   userRatingCount?: number | null;
 
-  @Field(() => ILocalizedText, { nullable: true })
   editorialSummary?: ILocalizedText | null;
 }

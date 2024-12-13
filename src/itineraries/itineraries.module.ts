@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ItinerariesService } from './itineraries.service';
-import { ItinerariesResolver } from './itineraries.resolver';
+import { ItinerariesController } from './itineraries.controller';
 
 @Module({
-  providers: [ItinerariesResolver, ItinerariesService],
+  providers: [ItinerariesService],
+  controllers: [ItinerariesController],
 })
 export class ItinerariesModule {}

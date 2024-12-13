@@ -30,6 +30,6 @@ export class AuthService {
       maxAge: 3600000, // 1 hour in milliseconds (matches the JWT expiration time)
     });
 
-    return res.redirect('http://localhost:3001/api/callback');
+    return res.redirect('http://localhost:3001');
   }
 }
