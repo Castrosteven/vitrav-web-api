@@ -14,6 +14,9 @@ input CreateItineraryInput {
   """Category of the itinerary"""
   itinerary_category: ItineraryType!
 
+  """Category Description """
+  itinerary_description: String!
+
   """Title of the itinerary"""
   itinerary_title: String!
 
@@ -136,7 +139,15 @@ type IViewport {
   low: ILatLng
 }
 
-type Itinerary {
+enum ItineraryCategory {
+  CUSTOM
+  DYNAMIC
+}
+
+type ItineraryEntity {
+  """Teh date the itinerary was created"""
+  createdAt: String!
+
   """
   List of place ids for the itinerary from https://developers.google.com/maps/documentation/places/web-service/place-id
   """
@@ -164,11 +175,12 @@ type Itinerary {
 
   """type of itinerary"""
   itinerary_type: ItineraryCategory!
-}
 
-enum ItineraryCategory {
-  CUSTOM
-  DYNAMIC
+  """Teh date the itinerary was last updated"""
+  updatedAt: String!
+
+  """The ID of the user who created the itinerary"""
+  userId: String!
 }
 
 enum ItineraryType {
@@ -178,7 +190,7 @@ enum ItineraryType {
 }
 
 type Mutation {
-  createItinerary(createItineraryInput: CreateItineraryInput!): Itinerary!
+  createItinerary(createItineraryInput: CreateItineraryInput!): ItineraryEntity!
 }
 
 type Query {
@@ -191,6 +203,6 @@ type Query {
     """Longititude only required if itinerary_type is dynamic"""
     long: Float
   ): GeneratedItinerary!
-  itineraries: [Itinerary!]!
-  itinerary(id: String!): Itinerary!
+  itineraries: [ItineraryEntity!]!
+  itinerary(id: String!): ItineraryEntity!
 }

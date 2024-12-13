@@ -15,6 +15,11 @@ export class CreateItineraryInput {
   })
   itinerary_category: ItineraryCategory;
 
+  @Field(() => String, {
+    description: 'Category Description ',
+    nullable: false,
+  })
+  itinerary_description: string;
   @Field(() => ItineraryType, {
     description: 'type of itinerary',
     nullable: false,

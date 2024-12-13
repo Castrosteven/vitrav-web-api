@@ -5,11 +5,12 @@ import {
   dynamicItineraryGenerator,
 } from './google_places_fetcher';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class ItinerariesService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createItineraryInput: CreateItineraryInput) {
+  async create(createItineraryInput: CreateItineraryInput, user: User) {
     const {
       itinerary_title,
       google_places_place_ids,
@@ -26,6 +27,7 @@ export class ItinerariesService {
         google_places_primary_place_types,
         itinerary_category: itinerary_category,
         itinerary_type: itinerary_type,
+        userId: user.id,
       },
     });
   }

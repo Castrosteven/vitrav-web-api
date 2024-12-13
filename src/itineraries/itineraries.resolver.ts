@@ -1,30 +1,33 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ItinerariesService } from './itineraries.service';
-import { Itinerary } from './entities/itinerary.entity';
+import { ItineraryEntity } from './entities/itinerary.entity';
 import { CreateItineraryInput } from './dto/create-itinerary.input';
 import { GeneratedItinerary } from './entities/generatedItinerary.entity';
 import { CurrentUser } from 'src/user.decorator';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-@Resolver(() => Itinerary)
+import { User } from '@prisma/client';
+
+@Resolver(() => ItineraryEntity)
 export class ItinerariesResolver {
   constructor(private readonly itinerariesService: ItinerariesService) {}
-  @Mutation(() => Itinerary)
+
+  @Mutation(() => ItineraryEntity)
   @UseGuards(JwtAuthGuard) // Protect this route with JWT authentication
   createItinerary(
-    @CurrentUser() user,
+    @CurrentUser() user: User,
     @Args('createItineraryInput') createItineraryInput: CreateItineraryInput,
   ) {
     console.log(`User: ${user.id} is creating itinerary`);
-    return this.itinerariesService.create(createItineraryInput);
+    return this.itinerariesService.create(createItineraryInput, user);
   }
 
-  @Query(() => [Itinerary], { name: 'itineraries' })
+  @Query(() => [ItineraryEntity], { name: 'itineraries' })
   findAll() {
     return this.itinerariesService.findAll();
   }
 
-  @Query(() => Itinerary, { name: 'itinerary' })
+  @Query(() => ItineraryEntity, { name: 'itinerary' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.itinerariesService.findOne(id);
   }

@@ -1,12 +1,30 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 // import { ItineraryCategory, ItineraryType } from '../enums';
-import { ItineraryCategory, ItineraryType } from '@prisma/client';
+import { Itinerary, ItineraryCategory, ItineraryType } from '@prisma/client';
 
 /**
  * Represents an itinerary entity.
  */
 @ObjectType()
-export class Itinerary {
+export class ItineraryEntity implements Itinerary {
+  @Field(() => String, {
+    description: 'Teh date the itinerary was created',
+    nullable: false,
+  })
+  createdAt: Date;
+
+  @Field(() => String, {
+    description: 'Teh date the itinerary was last updated',
+    nullable: false,
+  })
+  updatedAt: Date;
+
+  @Field(() => String, {
+    description: 'The ID of the user who created the itinerary',
+    nullable: false,
+  })
+  userId: string;
+
   @Field(() => String, {
     description: 'ID of the itinerary',
     nullable: false,
