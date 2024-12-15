@@ -103,3 +103,44 @@ export const fetchNearByPlaces = async (
 
   return foundPlaces;
 };
+
+export const fetchByText = async ({
+  name,
+  location,
+}: {
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}) => {
+  try {
+    const response = await placesClient.searchText(
+      {
+        textQuery: name,
+        locationBias: {
+          circle: {
+            center: {
+              latitude: location.latitude,
+              longitude: location.longitude,
+            },
+            radius: 500,
+          },
+        },
+      },
+      {
+        otherArgs: {
+          headers: {
+            'X-Goog-FieldMask': '*', // Customize based on your needs
+          },
+        },
+      },
+    );
+    const res: protos.google.maps.places.v1.ISearchTextResponse = response[0];
+    const req: protos.google.maps.places.v1.ISearchTextRequest = response[1];
+    return res;
+  } catch (error) {
+    console.error(`Error fetching place by text: ${name}`, error);
+    throw error;
+  }
+};

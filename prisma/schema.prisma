@@ -19,9 +19,16 @@ enum ItineraryType {
 }
 
 enum ItineraryCategory {
-  RED
-  GREEN
-  BLUE
+  ROMANTIC
+  ADVENTUROUS
+  FUN
+  CHILL
+  CULTURAL
+  NATURE
+  ACTIVE
+  INDULGENT
+  FAMILY_FRIENDLY
+  SOLO
 }
 
 enum Role {

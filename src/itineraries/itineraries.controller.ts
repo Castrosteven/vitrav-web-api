@@ -9,28 +9,17 @@ import {
   Post,
   UseGuards,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { User } from '@prisma/client';
+import { Itinerary, ItineraryCategory, User } from '@prisma/client';
+import { protos } from '@googlemaps/places';
 
-/**
- * Controller for handling itineraries related requests.
- */
 @Controller('itineraries')
 export class ItinerariesController {
-  /**
-   * Constructs a new instance of ItinerariesController.
-   * @param itinerariesService - The service used to manage itineraries.
-   */
   constructor(private readonly itinerariesService: ItinerariesService) {}
 
-  /**
-   * Creates a new itinerary.
-   * This route is protected with JWT authentication.
-   * @param user - The current authenticated user.
-   * @param createItineraryInput - The input data for creating a new itinerary.
-   * @returns The created itinerary.
-   */
   @Post('')
   @UseGuards(JwtAuthGuard)
   createItinerary(
@@ -41,40 +30,45 @@ export class ItinerariesController {
     return this.itinerariesService.create(createItineraryInput, user);
   }
 
-  /**
-   * Retrieves all itineraries.
-   * @returns A list of all itineraries.
-   */
   @Get('')
   async getItinerariesNear(
     @Query('lat') lat: string,
     @Query('long') long: string,
     @Query('page') page: string = '1',
     @Query('pageSize') pageSize: string = '10',
-  ) {
-    // Parse lat, long, page, pageSize from query params
+  ): Promise<{
+    page: number;
+    pageSize: number;
+    itineraries: Itinerary[];
+  }> {
+    let itineraries: Itinerary[] = [];
     const latitude = parseFloat(lat);
     const longitude = parseFloat(long);
     const pageNum = parseInt(page, 10);
     const pageSizeNum = parseInt(pageSize, 10);
 
-    // Ensure lat and long are valid numbers
     if (isNaN(latitude) || isNaN(longitude)) {
-      return {
-        statusCode: 400,
-        message: 'Invalid latitude or longitude.',
-      };
+      throw new HttpException(
+        'Invalid latitude or longitude.',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    // Call service to get the itineraries
-    const itineraries = await this.itinerariesService.getItinerariesNear(
+    itineraries = await this.itinerariesService.getItinerariesNear(
       latitude,
       longitude,
       pageNum,
       pageSizeNum,
     );
+    console.log(itineraries);
 
-    // Return response
+    if (itineraries.length === 0) {
+      itineraries = await this.itinerariesService.aiGenerator(
+        latitude,
+        longitude,
+      );
+    }
+
     return {
       page: pageNum,
       pageSize: pageSizeNum,
@@ -82,29 +76,22 @@ export class ItinerariesController {
     };
   }
 
-  /**
-   * Retrieves a single itinerary by its ID.
-   * @param id - The ID of the itinerary to retrieve.
-   * @returns The requested itinerary.
-   */
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.itinerariesService.findOne(id);
-  }
-
-  /**
-   * Generates an itinerary based on the provided ID and coordinates.
-   * @param id - The ID of the itinerary to generate.
-   * @param lat - The latitude coordinate.
-   * @param long - The longitude coordinate.
-   * @returns The generated itinerary.
-   */
-  @Get('/generate/:id')
-  generate(
+  @Get('generate/:id')
+  async generate(
     @Param('id') id: string,
     @Query('lat') lat: number,
     @Query('long') long: number,
-  ) {
-    return this.itinerariesService.generate(id, lat, long);
+  ): Promise<{
+    id: string;
+    itinerary_title: string;
+    itinerary_category: ItineraryCategory;
+    activities: protos.google.maps.places.v1.IPlace[];
+  }> {
+    return await this.itinerariesService.generate(id, lat, long);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.itinerariesService.findOne(id);
   }
 }
