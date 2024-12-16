@@ -158,21 +158,26 @@ export class ItinerariesService {
         google_places_place_ids: placeIds,
       });
     }
-    return await this.prisma.itinerary.createMany({
-      data: list.map((item) => {
-        return {
+    for (const item of list) {
+      const itinerary_thumbnail = await this.assistantService.generateImage({
+        description: item.itinerary_description,
+        title: item.itinerary_title,
+      });
+
+      await this.prisma.itinerary.create({
+        data: {
           google_places_place_ids: item.google_places_place_ids,
           google_places_primary_place_types: [],
           itinerary_category: 'ACTIVE',
           itinerary_description: item.itinerary_description,
           itinerary_title: item.itinerary_title,
           itinerary_type: 'DYNAMIC',
-          itinerary_thumbnail: '',
+          itinerary_thumbnail,
           userId: 'cm4qeinjz0000sxy4i1h0mv2f',
           latitude: lat,
           longitude: long,
-        };
-      }),
-    });
+        },
+      });
+    }
   }
 }

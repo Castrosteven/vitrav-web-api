@@ -43,4 +43,21 @@ export class AssistantService {
     const event = completion.choices[0].message.parsed;
     return event;
   }
+  public async generateImage({
+    title,
+    description,
+  }: {
+    title: string;
+    description: string;
+  }) {
+    const completion = await this.openai.images.generate({
+      model: 'dall-e-3',
+      prompt: `Create an image for an itinerary\nthe title is :\n${title}\nthe description:\n${description}`,
+      response_format: 'url',
+    });
+    if (completion.data.length === 0) {
+      return '';
+    }
+    return completion.data[0].url;
+  }
 }
