@@ -29,11 +29,11 @@ export class ItinerariesController {
     console.log(`User: ${user.id} is creating itinerary`);
     return this.itinerariesService.create(createItineraryInput, user);
   }
-
   @Get('')
   async getItinerariesNear(
     @Query('lat') lat: string,
     @Query('long') long: string,
+    @Query('place') place: string,
     @Query('page') page: string = '1',
     @Query('pageSize') pageSize: string = '10',
   ): Promise<{
@@ -54,19 +54,40 @@ export class ItinerariesController {
       );
     }
 
+    if (
+      latitude < -90 ||
+      latitude > 90 ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      throw new HttpException(
+        'Latitude or longitude out of bounds.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     itineraries = await this.itinerariesService.getItinerariesNear(
       latitude,
       longitude,
       pageNum,
       pageSizeNum,
     );
+
     console.log(itineraries);
 
-    if (itineraries.length === 0) {
-      itineraries = await this.itinerariesService.aiGenerator(
+    let retries = 0;
+    const maxRetries = 3;
+
+    while (itineraries.length < 5 && retries < maxRetries) {
+      console.log('Not enough itineraries found, generating more...');
+      await this.itinerariesService.aiGenerator(latitude, longitude, place);
+      itineraries = await this.itinerariesService.getItinerariesNear(
         latitude,
         longitude,
+        pageNum,
+        pageSizeNum,
       );
+      retries++;
     }
 
     return {
@@ -77,17 +98,13 @@ export class ItinerariesController {
   }
 
   @Get('generate/:id')
-  async generate(
-    @Param('id') id: string,
-    @Query('lat') lat: number,
-    @Query('long') long: number,
-  ): Promise<{
+  async generate(@Param('id') id: string): Promise<{
     id: string;
     itinerary_title: string;
     itinerary_category: ItineraryCategory;
     activities: protos.google.maps.places.v1.IPlace[];
   }> {
-    return await this.itinerariesService.generate(id, lat, long);
+    return await this.itinerariesService.generate(id);
   }
 
   @Get(':id')

@@ -115,6 +115,7 @@ export const fetchByText = async ({
   };
 }) => {
   try {
+    console.log('fetchByText' + name + location);
     const response = await placesClient.searchText(
       {
         textQuery: name,

@@ -24,26 +24,6 @@ async function main() {
   });
 
   console.log('Created user:', user);
-
-  // Create itineraries with the user as the creator
-  const itineraries = await prisma.itinerary.createMany({
-    data: [
-      {
-        google_places_primary_place_types: [
-          'amusement_park',
-          'italian_restaurant',
-        ],
-        itinerary_title: 'Family Fun Day Out',
-        itinerary_description:
-          'Enjoy a day filled with laughter and excitement at the amusement park, followed by a delicious Italian meal that will please both kids and adults alike!',
-        itinerary_category: 'FAMILY_FRIENDLY',
-        itinerary_thumbnail: '',
-        userId: user.id,
-      },
-    ],
-  });
-
-  console.log('Seeded itineraries:', itineraries);
 }
 
 main()
