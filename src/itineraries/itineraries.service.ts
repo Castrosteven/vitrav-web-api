@@ -173,7 +173,7 @@ export class ItinerariesService {
           itinerary_title: item.itinerary_title,
           itinerary_type: 'DYNAMIC',
           itinerary_thumbnail,
-          userId: 'cm4qeinjz0000sxy4i1h0mv2f',
+          userId: 'AI',
           latitude: lat,
           longitude: long,
         },

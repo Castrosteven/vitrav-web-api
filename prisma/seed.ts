@@ -11,6 +11,7 @@ async function main() {
   // Create a new User (this will be the creator of the itineraries)
   const user = await prisma.user.create({
     data: {
+      id: 'AI',
       email: 'john.doe@example.com', // You can change this to any email you want
       name: 'John Doe', // The user's name
       googleId: 'google-id-johndoe-12345', // A unique Google ID for the user (you can simulate or mock this value)
